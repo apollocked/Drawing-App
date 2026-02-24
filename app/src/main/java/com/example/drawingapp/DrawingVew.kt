@@ -22,6 +22,7 @@ class DrawingVew(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private lateinit var canvasBitmap: Bitmap
     private var brushSize: Float = 0.toFloat()
     private var canvasPaint = Paint()
+    private var paths = mutableListOf<FingerPath>()
 
     init {
         setUpDrawing()
@@ -37,10 +38,17 @@ class DrawingVew(context: Context, attrs: AttributeSet) : View(context, attrs) {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         canvas.drawBitmap(canvasBitmap, 0f, 0f, drawPaint)
+
+        for (path in paths) {
+            drawPaint.strokeWidth = path.brushThichness
+            drawPaint.color = path.color
+            canvas.drawPath(path, drawPaint)
+        }
+
         if (!drawPath.isEmpty) {
             drawPaint.strokeWidth = drawPath.brushThichness
             drawPaint.color = drawPath.color
-            canvas.drawPath(drawPath, drawPaint)
+            canvas?.drawPath(drawPath, drawPaint)
         }
     }
 
@@ -67,6 +75,7 @@ class DrawingVew(context: Context, attrs: AttributeSet) : View(context, attrs) {
             // this event will be fired when the user will pick up the finger from screen
             MotionEvent.ACTION_UP -> {
                 drawPath = FingerPath(color, brushSize)
+                paths.add(drawPath)
             }
 
             else -> return false
@@ -90,6 +99,8 @@ class DrawingVew(context: Context, attrs: AttributeSet) : View(context, attrs) {
         canvasPaint = Paint(Paint.DITHER_FLAG)
 
         brushSize = 20.toFloat()
+
+
 
     }
 
