@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 
@@ -74,8 +75,9 @@ class DrawingVew(context: Context, attrs: AttributeSet) : View(context, attrs) {
             }
             // this event will be fired when the user will pick up the finger from screen
             MotionEvent.ACTION_UP -> {
-                drawPath = FingerPath(color, brushSize)
                 paths.add(drawPath)
+                drawPath = FingerPath(color, brushSize)
+
             }
 
             else -> return false
@@ -101,7 +103,15 @@ class DrawingVew(context: Context, attrs: AttributeSet) : View(context, attrs) {
         brushSize = 20.toFloat()
 
 
+    }
 
+    fun changeBrushSize(newSize: Float) {
+        brushSize = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            newSize,
+            resources.displayMetrics
+        )
+        drawPaint.strokeWidth = brushSize
     }
 
 
