@@ -21,13 +21,18 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import yuku.ambilwarna.AmbilWarnaDialog
 import java.io.File
 import java.io.FileOutputStream
-import java.util.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var ibBrush: ImageButton
@@ -205,9 +210,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
             R.id.ib_save -> {
 
-                getBitmapFromView(this@MainActivity.findViewById(R.id.drawing_view))
-                saveImage(getBitmapFromView(this@MainActivity.findViewById(R.id.drawing_view)))
+                if (ActivityCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    requestStoragePermission()
 
+                } else {
+                    val layout = findViewById<ConstraintLayout>(R.id.constraint_l3)
+                    val bitmap = getBitmapFromView(layout)
+                    CoroutineScope(IO).launch {
+                        saveImage(bitmap)
+                    }
+
+
+                }
             }
 
 
@@ -249,6 +267,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             requestPermission.launch(
                 arrayOf(
                     Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
                 )
             )
         }
@@ -263,6 +282,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 requestPermission.launch(
                     arrayOf(
                         Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
                     )
                 )
                 dialog.dismiss()
@@ -278,28 +298,33 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         return returnedBitmap
     }
 
-    private fun saveImage(mBitmap: Bitmap){
+    private suspend fun  saveImage(mBitmap: Bitmap) {
         val root = Environment.getExternalStorageDirectory().toString()
         val myDir = File("$root/saved_images")
         myDir.mkdir()
-        val generator= java.util.Random()
+        val generator = java.util.Random()
         var n = 10000
-        var outPutFile = File(myDir, "Image-$n.jpg")
-        if (outPutFile.exists()){
-       outPutFile.delete()
+        n = generator.nextInt(n)
+        val fileName = "Image-$n.jpg"
 
-        }else{
+        var outPutFile = File(myDir, fileName)
+        if (outPutFile.exists()) {
+            outPutFile.delete()
+
+        } else {
             try {
-                val out= FileOutputStream(outPutFile)
+                val out = FileOutputStream(outPutFile)
                 mBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out)
                 out.flush()
                 out.close()
                 Toast.makeText(this, "Image Saved Successfully", Toast.LENGTH_SHORT).show()
-            }catch(e: Exception){
-            e.stackTrace
+            } catch (e: Exception) {
+                e.stackTrace
+            }
+            withContext(Main) {
+           Toast.makeText(this@MainActivity, "${outPutFile.absolutePath} Saved", Toast.LENGTH_SHORT).show()
             }
         }
-
 
 
     }
