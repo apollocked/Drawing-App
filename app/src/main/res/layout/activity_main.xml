@@ -21,9 +21,10 @@
         android:gravity="center"
         android:orientation="horizontal"
 
-        android:paddingHorizontal="42dp">
+        android:paddingHorizontal="59dp">
 
         <ImageButton
+            android:foreground="@drawable/button_selector"
             android:id="@+id/perpul_button"
             android:layout_width="25dp"
             android:layout_height="25dp"
@@ -36,9 +37,11 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:layout_weight="0.8" />
+            android:layout_weight="0.5" />
 
         <ImageButton
+            android:foreground="@drawable/button_selector"
+
             android:id="@+id/red_botton"
             android:layout_width="25dp"
             android:layout_height="25dp"
@@ -51,9 +54,11 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:layout_weight="0.8" />
+            android:layout_weight="0.5" />
 
         <ImageButton
+            android:foreground="@drawable/button_selector"
+
             android:id="@+id/green_botton"
             android:layout_width="25dp"
             android:layout_height="25dp"
@@ -66,9 +71,11 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:layout_weight="0.8" />
+            android:layout_weight="0.5" />
 
         <ImageButton
+            android:foreground="@drawable/button_selector"
+
             android:id="@+id/blue_botton"
             android:layout_width="25dp"
             android:layout_height="25dp"
@@ -81,9 +88,11 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:layout_weight="0.8" />
+            android:layout_weight="0.5" />
 
         <ImageButton
+            android:foreground="@drawable/button_selector"
+
             android:id="@+id/orange_botton"
             android:layout_width="25dp"
             android:layout_height="25dp"
@@ -106,6 +115,8 @@
         android:paddingHorizontal="25dp">
 
         <ImageButton
+            android:foreground="@drawable/button_selector"
+
             android:id="@+id/ib_brush"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -120,6 +131,8 @@
             android:layout_weight="1" />
 
         <ImageButton
+            android:foreground="@drawable/button_selector"
+
             android:id="@+id/ib_save"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -134,6 +147,8 @@
             android:layout_weight="1" />
 
         <ImageButton
+            android:foreground="@drawable/button_selector"
+
             android:id="@+id/ib_gallary"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -147,6 +162,8 @@
             android:layout_weight="1" />
 
         <ImageButton
+            android:foreground="@drawable/button_selector"
+
             android:id="@+id/ib_undo"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -161,6 +178,8 @@
             android:layout_weight="1" />
 
         <ImageButton
+            android:foreground="@drawable/button_selector"
+
             android:id="@+id/ib_color_picker"
             android:layout_width="50dp"
             android:layout_height="50dp"
