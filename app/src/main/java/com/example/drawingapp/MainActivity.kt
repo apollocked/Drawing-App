@@ -2,17 +2,27 @@ package com.example.drawingapp
 
 import android.app.Dialog
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageButton
 import android.widget.SeekBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var ibBrush: ImageButton
     private lateinit var drawingView: DrawingVew
+
+    private lateinit var perpulButton: ImageButton
+    private lateinit var redButton: ImageButton
+    private lateinit var greenButton: ImageButton
+    private lateinit var blueButton: ImageButton
+    private lateinit var orangeButton: ImageButton
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -23,12 +33,25 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         ibBrush = findViewById(R.id.ib_brush)
+        perpulButton = findViewById(R.id.perpul_button)
+        redButton = findViewById(R.id.red_botton)
+        greenButton = findViewById(R.id.green_botton)
+        blueButton = findViewById(R.id.blue_botton)
+        orangeButton = findViewById(R.id.orange_botton)
+
+        perpulButton.setOnClickListener(this)
+        redButton.setOnClickListener(this)
+        greenButton.setOnClickListener(this)
+        blueButton.setOnClickListener(this)
+        orangeButton.setOnClickListener(this)
+
 
         drawingView = findViewById(R.id.drawing_view)
         drawingView.changeBrushSize(20.toFloat())
         ibBrush.setOnClickListener {
             showBrushSizeChooserDialog()
         }
+
 
     }
 
@@ -57,5 +80,39 @@ class MainActivity : AppCompatActivity() {
 
         brushDialog.show()
 
+    }
+
+    override fun onClick(view: View?) {
+        when (view?.id) {
+            R.id.perpul_button -> {
+                drawingView.setColor("#7A277B")
+            }
+
+            R.id.red_botton -> {
+                drawingView.setColor("#C62101")
+            }
+
+            R.id.green_botton -> {
+                drawingView.setColor("#96A900")
+            }
+
+            R.id.blue_botton -> {
+                drawingView.setColor("#34B5E6")
+            }
+
+            R.id.orange_botton -> {
+                drawingView.setColor("#EE7722")
+            }
+
+            R.id.ib_brush -> {
+                showBrushSizeChooserDialog()
+            }
+
+            else -> {
+                Toast.makeText(this@MainActivity, "not working", Toast.LENGTH_SHORT).show()
+                return
+            }
+
+        }
     }
 }

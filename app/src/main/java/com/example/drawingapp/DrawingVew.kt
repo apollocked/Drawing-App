@@ -113,6 +113,13 @@ class DrawingVew(context: Context, attrs: AttributeSet) : View(context, attrs) {
         )
         drawPaint.strokeWidth = brushSize
     }
+    fun setColor(newColor: String) {
+
+        color = Color.parseColor(newColor)
+        drawPaint.color = color
+        invalidate()
+    }
+
 
 
     internal inner class FingerPath(var color: Int, var brushThichness: Float) : Path()
