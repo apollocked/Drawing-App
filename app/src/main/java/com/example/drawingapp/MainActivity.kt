@@ -25,7 +25,7 @@ import yuku.ambilwarna.AmbilWarnaDialog
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var ibBrush: ImageButton
-    private lateinit var drawingView: DrawingVew
+    private lateinit var drawingView: DrawingView
     private lateinit var undoButton: ImageButton
 
     private lateinit var ibSave: ImageButton

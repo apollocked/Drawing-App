@@ -10,8 +10,9 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
+import android.widget.Toast
 
-class DrawingVew(context: Context, attrs: AttributeSet) : View(context, attrs) {
+class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     //drawing path
     private lateinit var drawPath: FingerPath
