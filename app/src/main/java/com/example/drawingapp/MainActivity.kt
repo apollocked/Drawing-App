@@ -68,12 +68,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             val isGranted = it.value
             if (isGranted && permissionName == Manifest.permission.READ_EXTERNAL_STORAGE) {
 
-                Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "$permissionName Granted", Toast.LENGTH_SHORT).show()
                 val pickIntent =
                     Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                 openGalleryLauncher.launch(pickIntent)
 
-            } else {
+            } else if(isGranted && (permissionName == Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                Toast.makeText(this, "$permissionName Granted", Toast.LENGTH_SHORT).show()
+
+                CoroutineScope(IO).launch {
+                saveImage(getBitmapFromView(findViewById(R.id.constraint_l3)))}
+
+            }else {
                 if (permissionName == Manifest.permission.READ_EXTERNAL_STORAGE) {
                     Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show()
                 }
@@ -221,7 +227,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     val layout = findViewById<ConstraintLayout>(R.id.constraint_l3)
                     val bitmap = getBitmapFromView(layout)
                     CoroutineScope(IO).launch {
-                        saveImage(bitmap)
+                        saveImage(getBitmapFromView(layout))
                     }
 
 
@@ -299,7 +305,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private suspend fun  saveImage(mBitmap: Bitmap) {
-        val root = Environment.getExternalStorageDirectory().toString()
+        val root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString()
         val myDir = File("$root/saved_images")
         myDir.mkdir()
         val generator = java.util.Random()
