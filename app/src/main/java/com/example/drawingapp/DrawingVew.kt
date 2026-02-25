@@ -114,10 +114,15 @@ class DrawingVew(context: Context, attrs: AttributeSet) : View(context, attrs) {
         drawPaint.strokeWidth = brushSize
     }
 
-    fun setColor(newColor: String) {
+    fun setColor(newColor: Any) {
+        if ( newColor is String){
+            color = Color.parseColor(newColor)
+            drawPaint.color = color
+        }else if (newColor is Int){
+            color = newColor
+            drawPaint.color = color
+        }
 
-        color = Color.parseColor(newColor)
-        drawPaint.color = color
         invalidate()
     }
 

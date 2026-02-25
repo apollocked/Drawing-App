@@ -1,6 +1,7 @@
 package com.example.drawingapp
 
 import android.app.Dialog
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
@@ -11,11 +12,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import yuku.ambilwarna.AmbilWarnaDialog
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var ibBrush: ImageButton
     private lateinit var drawingView: DrawingVew
     private lateinit var undoButton: ImageButton
+
     private lateinit var ibSave: ImageButton
     private lateinit var ibGallary: ImageButton
     private lateinit var ibColorPicker: ImageButton
@@ -37,6 +40,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        ibColorPicker = findViewById(R.id.ib_color_picker)
 
         ibBrush = findViewById(R.id.ib_brush)
         perpulButton = findViewById(R.id.perpul_button)
@@ -56,6 +60,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         orangeButton.setOnClickListener(this)
         ibBrush.setOnClickListener(this)
         undoButton.setOnClickListener(this)
+        ibColorPicker.setOnClickListener(this)
 
 
 
@@ -116,8 +121,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             R.id.orange_botton -> {
                 drawingView.setColor("#EE7722")
             }
+
             R.id.ib_undo -> {
                 drawingView.undoPath()
+            }
+
+            R.id.ib_color_picker -> {
+                showColorPickerDialog()
             }
 
 
@@ -131,5 +141,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
 
         }
+
+
+    }
+
+    private fun showColorPickerDialog() {
+        val dialog =
+            AmbilWarnaDialog(this, Color.GREEN, object: AmbilWarnaDialog.OnAmbilWarnaListener {
+                override fun onCancel(dialog: AmbilWarnaDialog?) {
+                }
+
+                override fun onOk(dialog: AmbilWarnaDialog?, color: Int) {
+                drawingView.setColor(color)
+                }
+            })
+        dialog.show()
     }
 }
