@@ -9,7 +9,7 @@
     tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/canvas_frame"
+        android:id="@+id/constraint_l3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/LinerLayout1"
@@ -157,7 +157,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/gallary"
             android:scaleType="fitCenter"
-            android:padding="8dp"/>
+   />
 
         <Space android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1" />
 

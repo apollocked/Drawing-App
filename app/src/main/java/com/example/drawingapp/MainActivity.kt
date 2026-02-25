@@ -5,8 +5,11 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.view.View
 import android.widget.ImageButton
@@ -22,6 +25,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import yuku.ambilwarna.AmbilWarnaDialog
+import java.io.File
+import java.io.FileOutputStream
+import java.util.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var ibBrush: ImageButton
@@ -38,10 +44,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var greenButton: ImageButton
     private lateinit var blueButton: ImageButton
     private lateinit var orangeButton: ImageButton
+    private lateinit var saveButton: ImageButton
+
 
     private val openGalleryLauncher: ActivityResultLauncher<Intent> =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                result -> findViewById<ImageView>(R.id.gallery_image).setImageURI(result.data?.data)}
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            findViewById<ImageView>(
+                R.id.gallery_image
+            ).setImageURI(result.data?.data)
+        }
 
 
     val requestPermission: ActivityResultLauncher<Array<String>> = registerForActivityResult(
@@ -53,8 +64,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             if (isGranted && permissionName == Manifest.permission.READ_EXTERNAL_STORAGE) {
 
                 Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
-           val pickIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            openGalleryLauncher.launch(pickIntent)
+                val pickIntent =
+                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                openGalleryLauncher.launch(pickIntent)
 
             } else {
                 if (permissionName == Manifest.permission.READ_EXTERNAL_STORAGE) {
@@ -87,6 +99,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         undoButton = findViewById(R.id.ib_undo)
         ibSave = findViewById(R.id.ib_save)
         ibGallary = findViewById(R.id.ib_gallary)
+        saveButton = findViewById(R.id.ib_save)
+
 
 
 
@@ -100,6 +114,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         ibColorPicker.setOnClickListener(this)
         ibGallary.setOnClickListener(this)
         ibSave.setOnClickListener(this)
+        saveButton.setOnClickListener(this)
+
 
 
 
@@ -180,9 +196,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     requestStoragePermission()
                 } else {
                     //Get the image
-                    val pickIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                    val pickIntent =
+                        Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                     openGalleryLauncher.launch(pickIntent)
                 }
+
+            }
+
+            R.id.ib_save -> {
+
+                getBitmapFromView(this@MainActivity.findViewById(R.id.drawing_view))
+                saveImage(getBitmapFromView(this@MainActivity.findViewById(R.id.drawing_view)))
 
             }
 
@@ -245,6 +269,39 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
 
         builder.create().show()
+    }
+
+    private fun getBitmapFromView(view: View): Bitmap {
+        val returnedBitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(returnedBitmap)
+        view.draw(canvas)
+        return returnedBitmap
+    }
+
+    private fun saveImage(mBitmap: Bitmap){
+        val root = Environment.getExternalStorageDirectory().toString()
+        val myDir = File("$root/saved_images")
+        myDir.mkdir()
+        val generator= java.util.Random()
+        var n = 10000
+        var outPutFile = File(myDir, "Image-$n.jpg")
+        if (outPutFile.exists()){
+       outPutFile.delete()
+
+        }else{
+            try {
+                val out= FileOutputStream(outPutFile)
+                mBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out)
+                out.flush()
+                out.close()
+                Toast.makeText(this, "Image Saved Successfully", Toast.LENGTH_SHORT).show()
+            }catch(e: Exception){
+            e.stackTrace
+            }
+        }
+
+
+
     }
 
 }
