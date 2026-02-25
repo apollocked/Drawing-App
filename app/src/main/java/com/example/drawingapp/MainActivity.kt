@@ -3,11 +3,14 @@ package com.example.drawingapp
 import android.Manifest
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
@@ -36,6 +39,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var blueButton: ImageButton
     private lateinit var orangeButton: ImageButton
 
+    private val openGalleryLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                result -> findViewById<ImageView>(R.id.gallery_image).setImageURI(result.data?.data)}
+
 
     val requestPermission: ActivityResultLauncher<Array<String>> = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -46,6 +53,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             if (isGranted && permissionName == Manifest.permission.READ_EXTERNAL_STORAGE) {
 
                 Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
+           val pickIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            openGalleryLauncher.launch(pickIntent)
+
             } else {
                 if (permissionName == Manifest.permission.READ_EXTERNAL_STORAGE) {
                     Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show()
@@ -170,6 +180,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     requestStoragePermission()
                 } else {
                     //Get the image
+                    val pickIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                    openGalleryLauncher.launch(pickIntent)
                 }
 
             }

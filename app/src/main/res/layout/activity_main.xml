@@ -1,35 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.example.drawingapp.DrawingVew
-        android:id="@+id/drawing_view"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/constraint_2"
-        android:layout_alignParentTop="true" />
+        android:layout_above="@id/LinerLayout1"
+        android:layout_margin="16dp"
+        android:padding="2dp"
+        android:background="@drawable/drawing_view_background">
+
+        <ImageView
+            android:id="@+id/gallery_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.example.drawingapp.DrawingVew
+            android:id="@+id/drawing_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/constraint_2"
+        android:layout_margin="10dp"
+        android:paddingVertical="10dp"
+        android:background="@drawable/drawing_view_background"
+        android:id="@+id/LinerLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/constraint_1"
+        android:layout_above="@id/linerLayout2"
+        android:layout_marginTop="15dp"
         android:gravity="center"
         android:orientation="horizontal"
 
         android:paddingHorizontal="59dp">
 
         <ImageButton
-            android:foreground="@drawable/button_selector"
             android:id="@+id/perpul_button"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:background="@drawable/round_button_bg"
             android:backgroundTint="@color/purple"
+            android:foreground="@drawable/button_selector"
             android:padding="4dp"
             android:scaleType="centerInside"
             android:src="@drawable/purple" />
@@ -40,13 +68,13 @@
             android:layout_weight="0.5" />
 
         <ImageButton
-            android:foreground="@drawable/button_selector"
-
             android:id="@+id/red_botton"
+
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:background="@drawable/round_button_bg"
             android:backgroundTint="@color/red"
+            android:foreground="@drawable/button_selector"
             android:padding="4dp"
             android:scaleType="centerInside"
             android:src="@drawable/red" />
@@ -57,13 +85,13 @@
             android:layout_weight="0.5" />
 
         <ImageButton
-            android:foreground="@drawable/button_selector"
-
             android:id="@+id/green_botton"
+
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:background="@drawable/round_button_bg"
             android:backgroundTint="@color/green"
+            android:foreground="@drawable/button_selector"
             android:padding="4dp"
             android:scaleType="centerInside"
             android:src="@drawable/green" />
@@ -74,13 +102,13 @@
             android:layout_weight="0.5" />
 
         <ImageButton
-            android:foreground="@drawable/button_selector"
-
             android:id="@+id/blue_botton"
+
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:background="@drawable/round_button_bg"
             android:backgroundTint="@color/blue"
+            android:foreground="@drawable/button_selector"
             android:padding="4dp"
             android:scaleType="centerInside"
             android:src="@drawable/blue" />
@@ -91,20 +119,23 @@
             android:layout_weight="0.5" />
 
         <ImageButton
-            android:foreground="@drawable/button_selector"
-
             android:id="@+id/orange_botton"
+
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:background="@drawable/round_button_bg"
             android:backgroundTint="@color/orange"
+            android:foreground="@drawable/button_selector"
             android:padding="4dp"
             android:scaleType="centerInside"
             android:src="@drawable/orange" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/constraint_1"
+        android:layout_margin="10dp"
+        android:paddingVertical="5dp"
+        android:background="@drawable/drawing_view_background"
+        android:id="@+id/linerLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -115,12 +146,12 @@
         android:paddingHorizontal="25dp">
 
         <ImageButton
-            android:foreground="@drawable/button_selector"
-
             android:id="@+id/ib_brush"
+
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@android:color/transparent"
+            android:foreground="@drawable/button_selector"
             android:padding="5dp"
             android:scaleType="fitStart"
             android:src="@drawable/brush" />
@@ -131,12 +162,12 @@
             android:layout_weight="1" />
 
         <ImageButton
-            android:foreground="@drawable/button_selector"
-
             android:id="@+id/ib_save"
+
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@android:color/transparent"
+            android:foreground="@drawable/button_selector"
             android:padding="10dp"
             android:scaleType="fitXY"
             android:src="@drawable/save" />
@@ -147,12 +178,12 @@
             android:layout_weight="1" />
 
         <ImageButton
-            android:foreground="@drawable/button_selector"
-
             android:id="@+id/ib_gallary"
+
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@android:color/transparent"
+            android:foreground="@drawable/button_selector"
             android:scaleType="fitXY"
             android:src="@drawable/gallary" />
 
@@ -162,12 +193,12 @@
             android:layout_weight="1" />
 
         <ImageButton
-            android:foreground="@drawable/button_selector"
-
             android:id="@+id/ib_undo"
+
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@android:color/transparent"
+            android:foreground="@drawable/button_selector"
             android:padding="9dp"
             android:scaleType="fitXY"
             android:src="@drawable/undo" />
@@ -178,12 +209,12 @@
             android:layout_weight="1" />
 
         <ImageButton
-            android:foreground="@drawable/button_selector"
-
             android:id="@+id/ib_color_picker"
+
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@android:color/transparent"
+            android:foreground="@drawable/button_selector"
             android:padding="10dp"
             android:scaleType="fitXY"
             android:src="@drawable/colorpicker" />
