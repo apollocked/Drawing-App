@@ -113,12 +113,21 @@ class DrawingVew(context: Context, attrs: AttributeSet) : View(context, attrs) {
         )
         drawPaint.strokeWidth = brushSize
     }
+
     fun setColor(newColor: String) {
 
         color = Color.parseColor(newColor)
         drawPaint.color = color
         invalidate()
     }
+
+fun undoPath() {
+    if (paths.size > 0) {
+        paths.removeAt(paths.size - 1)}
+    invalidate()
+}
+
+
 
 
 

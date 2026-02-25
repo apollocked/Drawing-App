@@ -15,6 +15,11 @@ import androidx.core.view.WindowInsetsCompat
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var ibBrush: ImageButton
     private lateinit var drawingView: DrawingVew
+    private lateinit var undoButton: ImageButton
+    private lateinit var ibSave: ImageButton
+    private lateinit var ibGallary: ImageButton
+    private lateinit var ibColorPicker: ImageButton
+    private lateinit var ibEraser: ImageButton
 
     private lateinit var perpulButton: ImageButton
     private lateinit var redButton: ImageButton
@@ -32,18 +37,26 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
         ibBrush = findViewById(R.id.ib_brush)
         perpulButton = findViewById(R.id.perpul_button)
         redButton = findViewById(R.id.red_botton)
         greenButton = findViewById(R.id.green_botton)
         blueButton = findViewById(R.id.blue_botton)
         orangeButton = findViewById(R.id.orange_botton)
+        undoButton = findViewById(R.id.ib_undo)
+        ibSave = findViewById(R.id.ib_save)
+
+
 
         perpulButton.setOnClickListener(this)
         redButton.setOnClickListener(this)
         greenButton.setOnClickListener(this)
         blueButton.setOnClickListener(this)
         orangeButton.setOnClickListener(this)
+        ibBrush.setOnClickListener(this)
+        undoButton.setOnClickListener(this)
+
 
 
         drawingView = findViewById(R.id.drawing_view)
@@ -103,6 +116,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             R.id.orange_botton -> {
                 drawingView.setColor("#EE7722")
             }
+            R.id.ib_undo -> {
+                drawingView.undoPath()
+            }
+
 
             R.id.ib_brush -> {
                 showBrushSizeChooserDialog()
