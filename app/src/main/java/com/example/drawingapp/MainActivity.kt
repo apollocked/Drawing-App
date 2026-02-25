@@ -1,6 +1,9 @@
 package com.example.drawingapp
 
+import android.Manifest
+import android.app.AlertDialog
 import android.app.Dialog
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -9,7 +12,10 @@ import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import yuku.ambilwarna.AmbilWarnaDialog
@@ -31,6 +37,26 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var orangeButton: ImageButton
 
 
+    val requestPermission: ActivityResultLauncher<Array<String>> = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        permissions.entries.forEach {
+            val permissionName = it.key
+            val isGranted = it.value
+            if (isGranted && permissionName == Manifest.permission.READ_EXTERNAL_STORAGE) {
+
+                Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
+            } else {
+                if (permissionName == Manifest.permission.READ_EXTERNAL_STORAGE) {
+                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -50,6 +76,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         orangeButton = findViewById(R.id.orange_botton)
         undoButton = findViewById(R.id.ib_undo)
         ibSave = findViewById(R.id.ib_save)
+        ibGallary = findViewById(R.id.ib_gallary)
 
 
 
@@ -61,6 +88,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         ibBrush.setOnClickListener(this)
         undoButton.setOnClickListener(this)
         ibColorPicker.setOnClickListener(this)
+        ibGallary.setOnClickListener(this)
+        ibSave.setOnClickListener(this)
+
 
 
 
@@ -130,6 +160,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 showColorPickerDialog()
             }
 
+            R.id.ib_gallary -> {
+                if (ActivityCompat.checkSelfPermission(
+                        this,
+                        android.Manifest.permission.READ_EXTERNAL_STORAGE
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+
+                    requestStoragePermission()
+                } else {
+                    //Get the image
+                }
+
+            }
+
 
             R.id.ib_brush -> {
                 showBrushSizeChooserDialog()
@@ -147,14 +191,48 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun showColorPickerDialog() {
         val dialog =
-            AmbilWarnaDialog(this, Color.GREEN, object: AmbilWarnaDialog.OnAmbilWarnaListener {
+            AmbilWarnaDialog(this, Color.GREEN, object : AmbilWarnaDialog.OnAmbilWarnaListener {
                 override fun onCancel(dialog: AmbilWarnaDialog?) {
                 }
 
                 override fun onOk(dialog: AmbilWarnaDialog?, color: Int) {
-                drawingView.setColor(color)
+                    drawingView.setColor(color)
                 }
             })
         dialog.show()
     }
+
+    private fun requestStoragePermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        ) {
+            showRationalDialog()
+        } else {
+            requestPermission.launch(
+                arrayOf(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                )
+            )
+        }
+
+    }
+
+    private fun showRationalDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Permission Required")
+            .setMessage("We need permission to access your storage")
+            .setPositiveButton("Yes") { dialog, _ ->
+                requestPermission.launch(
+                    arrayOf(
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                    )
+                )
+                dialog.dismiss()
+            }
+
+        builder.create().show()
+    }
+
 }
