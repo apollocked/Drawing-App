@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Drawing App</string>
+    <string name="galary">galary Icon</string>
+    <string name="pickColors">color picker</string>
+    <string name="Save_buttons">save </string>
+    <string name="Undo">Undo</string>
+    <string name="Brush">Brush</string>
+    <string name="image_drawer">Image</string>
+    <string name="orange_color">Orange Color</string>
+    <string name="Blue_color">Blue Color</string>
+    <string name="green_color">Green Color</string>
+    <string name="purple_color">Purple Color</string>
+    <string name="red_color">Red Color</string>
 </resources>

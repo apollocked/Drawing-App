@@ -329,6 +329,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
             withContext(Main) {
            Toast.makeText(this@MainActivity, "${outPutFile.absolutePath} Saved", Toast.LENGTH_SHORT).show()
+         this@MainActivity.finish()
+                this@MainActivity.startActivity(intent)
             }
         }
 

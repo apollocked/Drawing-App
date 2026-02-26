@@ -22,6 +22,7 @@
             android:id="@+id/gallery_image"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:contentDescription="@string/galary"
             android:scaleType="centerInside"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -31,6 +32,8 @@
         <com.example.drawingapp.DrawingView
             android:id="@+id/drawing_view"
             android:layout_width="0dp"
+            android:contentDescription="@string/image_drawer"
+
             android:layout_height="0dp"
             android:background="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -56,6 +59,8 @@
         android:elevation="4dp">
 
         <ImageButton
+            android:contentDescription="@string/purple_color"
+
             android:id="@+id/perpul_button"
             android:layout_width="28dp"
             android:layout_height="28dp"
@@ -68,6 +73,8 @@
         <Space android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1" />
 
         <ImageButton
+            android:contentDescription="@string/red_color"
+
             android:id="@+id/red_botton"
             android:layout_width="28dp"
             android:layout_height="28dp"
@@ -80,6 +87,8 @@
         <Space android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1" />
 
         <ImageButton
+            android:contentDescription="@string/green_color"
+
             android:id="@+id/green_botton"
             android:layout_width="28dp"
             android:layout_height="28dp"
@@ -92,6 +101,8 @@
         <Space android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1" />
 
         <ImageButton
+            android:contentDescription="@string/Blue_color"
+
             android:id="@+id/blue_botton"
             android:layout_width="28dp"
             android:layout_height="28dp"
@@ -104,6 +115,8 @@
         <Space android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1" />
 
         <ImageButton
+            android:contentDescription="@string/orange_color"
+
             android:id="@+id/orange_botton"
             android:layout_width="28dp"
             android:layout_height="28dp"
@@ -129,6 +142,8 @@
         android:elevation="4dp">
 
         <ImageButton
+            android:contentDescription="@string/Brush"
+
             android:id="@+id/ib_brush"
             android:layout_width="48dp"
             android:layout_height="48dp"
@@ -140,6 +155,8 @@
         <Space android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1" />
 
         <ImageButton
+            android:contentDescription="@string/pickColors"
+
             android:id="@+id/ib_color_picker"
             android:layout_width="48dp"
             android:layout_height="48dp"
@@ -151,6 +168,8 @@
         <Space android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1" />
 
         <ImageButton
+            android:contentDescription="@string/galary"
+
             android:id="@+id/ib_gallary"
             android:layout_width="48dp"
             android:layout_height="48dp"
@@ -162,6 +181,8 @@
         <Space android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1" />
 
         <ImageButton
+            android:contentDescription="@string/Undo"
+
             android:id="@+id/ib_undo"
             android:layout_width="48dp"
             android:layout_height="48dp"
@@ -173,6 +194,7 @@
         <Space android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1" />
 
         <ImageButton
+            android:contentDescription="@string/Save_buttons"
             android:id="@+id/ib_save"
             android:layout_width="48dp"
             android:layout_height="48dp"
