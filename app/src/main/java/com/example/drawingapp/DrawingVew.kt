@@ -133,7 +133,14 @@ fun undoPath() {
     invalidate()
 }
 
-
+    fun clearCanvas() {
+        paths.clear() // Clear the list of paths
+        drawPath.reset() // Reset the current path
+        // Re-create the bitmap to wipe it clean
+        canvasBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        canvas = Canvas(canvasBitmap)
+        invalidate() // Tell the view to redraw itself (as blank)
+    }
 
 
 

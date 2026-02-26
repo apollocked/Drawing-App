@@ -9,7 +9,7 @@
     tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraint_l3"
+        android:id="@+id/canvas_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/LinerLayout1"
@@ -23,7 +23,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:contentDescription="@string/galary"
-            android:scaleType="centerInside"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
